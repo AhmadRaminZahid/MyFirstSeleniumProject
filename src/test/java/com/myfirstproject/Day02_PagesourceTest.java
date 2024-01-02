@@ -10,18 +10,19 @@ public class Day02_PagesourceTest {
         driver.manage().window().maximize();
 
 //        Navigate to amazon home page
-        driver.get("https://www.amazon.com");
+        driver.get("https://www.amazon.com/");
         Thread.sleep(3000);
         driver.navigate().refresh();
         Thread.sleep(3000);
 
 //        get the page source code
-        String pageSource = driver.getPageSource();
+       String pageSource = driver.getPageSource();
+       Thread.sleep(4000);
 //       System.out.println(pageSource);
 
         // Validation
 
-        if (pageSource.contains("Registry")){
+        if (pageSource.contains("Magazine")){
             System.out.println("PASS");
         }else {
             System.out.println("FAIL. There is no such word on the page");

@@ -14,15 +14,14 @@ Note: All test methods should be void
 4. @Disabled annotation just makes that test case ignored for that run
      */
     @BeforeAll
+
     public static void setUpClass(){
         System.out.println("Before all class ... ");
     }
-
     @AfterAll
     public static void tearDownClass(){
         System.out.println("After all class ... ");
     }
-
     @BeforeEach
     public void setUpMethods(){
         System.out.println("Before each method... ");
@@ -43,6 +42,7 @@ Note: All test methods should be void
         System.out.println("Test case 2 ....");
     }
 
+
     @Test
     public void  test3(){
         System.out.println("Test case 3... ");
@@ -62,4 +62,8 @@ Note: All test methods should be void
     public void  test6(){
         System.out.println("Test case 6... ");
     }
+
+
     }
+
+

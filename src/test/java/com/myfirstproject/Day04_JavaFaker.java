@@ -47,9 +47,5 @@ public class Day04_JavaFaker {
     //random digits
     System.out.println(faker.number().digit());
 
-
-
-
-
 }
 }

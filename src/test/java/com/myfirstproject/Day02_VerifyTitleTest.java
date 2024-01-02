@@ -19,15 +19,15 @@ public class Day02_VerifyTitleTest {
         Thread.sleep(1000);
 
         //    Verify if page title is "Amazon.com. Spend less. Smile more."
-       String actualTitle= driver.getTitle(); // gets the title of current page
-        System.out.println("actualTitle = " + actualTitle);
+      ; // gets the title of current page
+
         //Validation
-        if(actualTitle.contains("Amazon")) {
+        if(driver.getTitle().contains("Amazon")) {
             System.out.println("Test passed");
         }
         else {
             System.out.println("Test failed");
-            System.out.println("actualTitle: "+actualTitle+"  Expected Title: Amazon.com. Spend less. Smile more. ");
+            System.out.println("actualTitle:   Expected Title: Amazon.com. Spend less. Smile more. ");
         }
 
         //    Close the window

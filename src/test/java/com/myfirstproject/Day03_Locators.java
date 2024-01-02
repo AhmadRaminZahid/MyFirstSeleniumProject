@@ -71,4 +71,13 @@ public class Day03_Locators {
         Assertions.assertTrue(driver.getCurrentUrl().contains("auth"));
 
     }
+    @Test
+    public void logoutFunction(){
+        System.out.println("logout functionality");
+    }
+
+    @Test
+    public void signupFunction(){
+        System.out.println("sign up functionality");
+    }
 }
