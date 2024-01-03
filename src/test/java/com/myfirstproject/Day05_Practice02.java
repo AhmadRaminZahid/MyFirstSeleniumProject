@@ -44,6 +44,7 @@ Thread.sleep(10000);
         statesList.selectByValue("TX");
 Thread.sleep(10000);
         //    Assert if 'Texas' is selected or not
+
 Assertions.assertTrue(statesList.getFirstSelectedOption().getAttribute("value").equals("TX"));
       //    Then check if state names are in alphabetical order or not
        Collections.sort(list1, Comparator.comparing(WebElement::getText));
