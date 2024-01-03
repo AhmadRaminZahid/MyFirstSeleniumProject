@@ -32,11 +32,11 @@ public class Day05_checkbox {
         driver.navigate().to("https://testcenter.techproeducation.com/index.php?page=checkboxes");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 // locate the checkbox elements
-    WebElement checkbox1= driver.findElement(By.id("box1"));
+    //driver.findElement(By.id("box1"));
     WebElement checkbox2= driver.findElement(By.id("box2"));
     //select box1 if not selected
-if (!checkbox1.isSelected()){
-    checkbox1.click();
+if (driver.findElement(By.id("box1")).isSelected()){
+    driver.findElement(By.id("box1")).click();
 }
 Thread.sleep(5000);
     //select box2 if not selected
@@ -45,7 +45,7 @@ if (!checkbox2.isSelected()){
 }
 Thread.sleep(5000);
     //verify that box1 is selected
-    Assertions.assertTrue(checkbox1.isSelected());
+    Assertions.assertTrue(driver.findElement(By.id("box1")).isSelected());
     //verify that box2 is selected
 Assertions.assertTrue(checkbox2.isSelected());
     }

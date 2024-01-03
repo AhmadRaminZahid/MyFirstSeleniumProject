@@ -21,16 +21,14 @@ public class YoutubePractice {
         driver.get("https://www.youtube.com/");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
-//   @AfterEach
-//  public void quit(){
-//    driver.quit();
-//   }
-    List<WebElement> myList = driver.findElements(By.className("ahmad"));
+   @AfterEach
+  public void quit(){
+   driver.quit();
+   }
 
     @Test
     public void signIn(){
-        driver.findElement(By.linkText("Sign in")).click();
-        driver.findElement(By.id("identifierId")).sendKeys("ahmadraminzahid1120");
+        driver.findElement(By.xpath("//div[@class='yt-spec-touch-feedback-shape__fill'][1]")).click();
 
 
     }
