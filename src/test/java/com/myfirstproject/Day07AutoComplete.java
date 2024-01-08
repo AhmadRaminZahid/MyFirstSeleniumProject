@@ -13,7 +13,7 @@ public class Day07AutoComplete extends TestBase {
         driver.get("https://testcenter.techproeducation.com/index.php?%20page=autocomplete");
 
 //        When user type “uni” in the search box
-        driver.findElement(By.id("myCountry")).sendKeys("uni");
+        driver.findElement(By.id("myCountry")).sendKeys("u");
         Thread.sleep(1000);
 
 //        And select the ‘United Kingdom’ from the suggestions
