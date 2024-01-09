@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import javax.swing.*;
+import java.time.Duration;
 
 public class Day09_Actions01 extends TestBase {
     @Test
@@ -21,6 +22,7 @@ public class Day09_Actions01 extends TestBase {
         //        We can't see the "Account" link unless we hover over "Account & List" option
 //        So we need to create actions object
 //        Step 1:
+
         Actions actions= new Actions(driver);
         //        Step 2: Find the element first and then use moveToElement() from actions class
         WebElement accountListTab= driver.findElement(By.id("nav-link-accountList"));
@@ -38,20 +40,19 @@ public class Day09_Actions01 extends TestBase {
         actions.moveToElement(amazonMusic).perform();
 //        Click on it
         actions.click(amazonMusic).perform();
-        Thread.sleep(2000);
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+        Thread.sleep(10000);
 //        Then verify Amazon Music page is displayed
         Assertions.assertTrue(driver.getCurrentUrl().contains("music"));
 //        Scroll the page up and down
-        actions.sendKeys(Keys.PAGE_DOWN).perform();//scrolls down
-        Thread.sleep(3000);
-        actions.sendKeys(Keys.PAGE_UP).perform(); //scrolls up
-        Thread.sleep(3000);
-        actions.sendKeys(Keys.PAGE_DOWN).perform();
-        Thread.sleep(3000);
+       // actions.sendKeys(Keys.PAGE_DOWN).perform();//scrolls down
+      //  Thread.sleep(3000);
+      //  actions.sendKeys(Keys.PAGE_UP).perform(); //scrolls up
+      //  Thread.sleep(3000);
         actions.sendKeys(Keys.ARROW_DOWN).perform();
         Thread.sleep(3000);
         actions.sendKeys(Keys.ARROW_DOWN).perform();
-        Thread.sleep(3000);
+        Thread.sleep(6000);
 
 //        we can also create a chain of functions and it is recommended to use build()
         actions.sendKeys(Keys.PAGE_DOWN).sendKeys(Keys.PAGE_DOWN).sendKeys(Keys.PAGE_DOWN).build().perform();
