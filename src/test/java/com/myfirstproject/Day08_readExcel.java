@@ -20,7 +20,7 @@ public class Day08_readExcel {
         try {
             FileInputStream fileInputStream = new FileInputStream(path);
             // First we need to open Workbook
-            Workbook workbook = WorkbookFactory.create(fileInputStream);  // to open the excel sheet
+            Workbook  workbook = WorkbookFactory.create(fileInputStream);  // to open the excel sheet
 
 //        Open the first worksheet
             Sheet sheet1 =  workbook.getSheetAt(0); // get first sheet
