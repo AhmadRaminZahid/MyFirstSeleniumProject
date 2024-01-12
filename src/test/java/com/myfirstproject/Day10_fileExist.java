@@ -13,7 +13,7 @@ public class Day10_fileExist extends TestBase {
     public void fileExistsTest(){
      String path=    System.getProperty("home.user")+"/Downloads/flower.jpeg";
         System.out.println("path = " + path);
-        Assertions.assert;
+        Assertions.assertTrue(Files.exists(Paths.get(path)));
     }
 
 }
