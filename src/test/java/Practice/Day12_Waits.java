@@ -77,24 +77,22 @@ public class Day12_Waits extends TestBase {
         WebElement textboxEnabled = driver.findElement(By.xpath("//*[@type='text']"));
         textboxEnabled.sendKeys("I can type in the box");
         System.out.println(textboxEnabled.getText());
-        Assertions.assertEquals("I can type in the box", textboxEnabled);
+        Assertions.assertTrue(textboxEnabled.isEnabled());
 
 //    ØAnd click on Disable button
         WebElement clickDisableButton =  driver.findElement(By.xpath("(//button)[2]"));
         clickDisableButton.click();
-/*
+
 //    ØAnd verify the message is equal to “It's disabled!”
       WebElement verifyToDisabled =  driver.findElement(By.xpath("//*[@id='message']"));
       Assertions.assertEquals("It's disabled!",verifyToDisabled.getText());
 
 //    ØAnd verify the textbox is disabled (I cannot type in the box)
         WebElement textBoxDisabled = driver.findElement(By.xpath("//*[@type='text']"));
-        textBoxDisabled.sendKeys("I can not type in the box");
-        Assertions.assertNotEquals("I can type in the box", textBoxDisabled.getText());
+
+        Assertions.assertFalse(textBoxDisabled.isEnabled());
 
 //    ØNOTE: .isEnabled(); is used to check if an element is enabled or not
-
- */
 
     }
 }

@@ -1,41 +1,50 @@
 package Utilities;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 public abstract class TestBase {
     /*
-     - We keep TestBase class abstract because we don't want to create object from this class
-     - TestBase class is used to store repetitive methods which are used as pre-conditions or post-conditions
-     - We make WebDriver protected because we want it to be available for all classes within this project
-     -TestBase will be extended to classes where test steps are and this class will provide before and after methods automatically
-      */
+   - We keep TestBase class abstract because we don't want to create object from this class
+   - TestBase class is used to store repetitive methods which are used as pre-conditions or post-conditions
+   - We make WebDriver protected because we want it to be available for all classes within this project
+   -TestBase will be extended to classes where test steps are and this class will provide before and after methods automatically
+    */
     protected static WebDriver driver;
     @BeforeEach
     public void setUp(){
         driver = new ChromeDriver(); // instantiating chrome driver
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30)); // Implicit wait
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30)); // allows time to the page to load
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20)); // Implicit wait
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20)); // allows time to the page to load
         driver.manage().window().maximize();
     }
-    //    @AfterEach
-//    public void tearDown() throws InterruptedException {
-////        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20)); // Implicit wait if needed
-//        Thread.sleep(3000);
-//        driver.quit();
-//    }
-//    DROPDOWN
+    @AfterEach
+    public void tearDown() throws InterruptedException {
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20)); // Implicit wait if needed
+        Thread.sleep(3000);
+        driver.quit();
+    }
+    //    DROPDOWN
 //    Create a reusable method that select dropdown option by index
     public static void dropdownSelectByIndex(WebElement element, int index){
         Select select = new Select(element);
@@ -272,6 +281,101 @@ public abstract class TestBase {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
+    //======Fluent Wait====
+    // params : xpath of teh element , max timeout in seconds, polling in second
+    public static WebElement fluentWait(String xpath, int withTimeout, int pollingEvery) {
+        FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+                .withTimeout(Duration.ofSeconds(withTimeout))//Wait 3 second each time
+                .pollingEvery(Duration.ofSeconds(pollingEvery))//Check for the element every 1 second
+                .withMessage("Ignoring No Such Element Exception")
+                .ignoring(NoSuchElementException.class);
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+        return element;
+    }
+    public static WebElement waitForClickablility(WebElement element, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+    public static WebElement waitForClickablility(By locator, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+    //    ROBOT UPLOAD FILE
+    public static void uploadFile(String pathOfFile) {
+        // Following try/catch -- all JAVA classes+logic
+        try {
+            waitFor(1);
+//            copy the path of the file that is given on the clipboard (desktop window pop-up
+            StringSelection stringSelection = new StringSelection(pathOfFile);
+            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+//            creating robot object
+            Robot robot = new Robot();
+//            press control V = paste
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_V);
+            waitFor(1);
+//            release control V
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+            robot.keyRelease(KeyEvent.VK_V);
+            waitFor(1);
+//            press enter
+            robot.keyPress(KeyEvent.VK_ENTER);
+//            release enter
+            robot.keyRelease(KeyEvent.VK_ENTER);
+            waitFor(1);
+            System.out.println("Upload is completed...");
+        } catch (Exception e) {
+        }
 
+    }
+//    SCREENSHOT : capture the screenshot of the entire page
+
+    public void captureScreenshotOfEntirePage(){
+//        1. getScreenShotAs method to capture the screenshot
+        File image = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+//        save the image in a path with a dynamic name
+        String now = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());  // To provide Unique name for each screenshot
+        String filePath = System.getProperty("user.dir")+"/test-output/Screenshots/"+now+"image.png";
+//        save the image in the path
+        try {
+            FileUtils.copyFile(image, new File(filePath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    //    SCREENSHOT : capture the screenshot of the GIVEN Element Only
+
+    public void captureScreenshotOfElement(WebElement element){
+//        1. getScreenShotAs method to capture the screenshot
+        File image = element.getScreenshotAs(OutputType.FILE);
+//        save the image in a path with a dynamic name
+        String now = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());  // To provide Unique name for each screenshot
+        String filePath = System.getProperty("user.dir")+"/test-output/ElementScreenshot/"+now+"image.png";
+//        save the image in the path
+        try {
+            FileUtils.copyFile(image, new File(filePath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    //    SCREENSHOT : capture the screenshot of the entire page  (For EXTENT REPORTS)
+
+    public static String captureScreenshotOfEntirePageAsString(){
+//        1. getScreenShotAs method to capture the screenshot
+        File image = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+//        save the image in a path with a dynamic name
+        String now = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());  // To provide Unique name for each screenshot
+        String filePath = System.getProperty("user.dir")+"/test-output/Reports/"+now+"image.png";
+//        save the image in the path
+        try {
+            FileUtils.copyFile(image, new File(filePath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new File(filePath).getAbsolutePath();
+    }
 
 }
