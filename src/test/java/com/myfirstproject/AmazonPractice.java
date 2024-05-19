@@ -31,6 +31,8 @@ public class AmazonPractice {
         if (search2.getAttribute("name").equals("field-keywords")){
             System.out.println("pass2");
         }
-driver.quit();
+        //amazon sayfasina gittik ve testlerimizi yaptik
+
+    driver.quit();
     }
 }
