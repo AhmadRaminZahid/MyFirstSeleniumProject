@@ -59,6 +59,8 @@ public class Day20HW1 extends TestBase {
         for (int i = 1; i <6 ; i++) {
             actions.sendKeys(Keys.TAB).perform();
         }
+        //merhaba ben burda kod yazdim. 19 Mayis 2024
+        //Mukaddes hanim deneme kodlari.
         Thread.sleep(2000);
         captureScreenshotOfEntirePage();
         actions.sendKeys(Keys.ENTER).perform();
