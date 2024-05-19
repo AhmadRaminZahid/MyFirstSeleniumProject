@@ -59,6 +59,15 @@ public class Day20HW1 extends TestBase {
         for (int i = 1; i <6 ; i++) {
             actions.sendKeys(Keys.TAB).perform();
         }
+        //iyi ginler nasilsimiz
+        //iyi ginler nasilsimiz
+        //iyi ginler nasilsimiz
+        //iyi ginler nasilsimiz
+        //iyi ginler nasilsimiz
+        //iyi ginler nasilsimiz
+        //iyi ginler nasilsimiz
+
+
         Thread.sleep(2000);
         captureScreenshotOfEntirePage();
         actions.sendKeys(Keys.ENTER).perform();
